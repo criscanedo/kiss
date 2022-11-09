@@ -1,0 +1,41 @@
+libburn
+________________________________________________________________________________
+
+libburn is a library by which preformatted data get onto optical media: CD,
+DVD, BD (Blu-Ray). On Linux it uses either /dev/sgN (on kernel 2.4 with
+ide-scsi, or optional with concurrent operation of multiple drives) or
+/dev/srM (kernel 2.6 and newer), /dev/hdX ( on kernel 2.6). On FreeBSD it uses
+/dev/cdN, eventually via atapicam. On Solaris addresses look like
+/dev/rdsk/cXtYd0s2. [0]
+
+Upstream: https://dev.lovelyhq.com/libburnia/web/wiki/Libburn
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libburn                                                            |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://dev.lovelyhq.com/libburnia/web/wiki/Libburn
