@@ -1,0 +1,40 @@
+libisoburn
+________________________________________________________________________________
+
+libisoburn is a frontend for libraries libburn and libisofs which enables
+creation and expansion of ISO-9660 filesystems on all CD/DVD/BD media
+supported by libburn. This includes media like DVD+RW, which do not support
+multi-session management on media level and even plain disk files or block
+devices. [0]
+
+Upstream: https://dev.lovelyhq.com/libburnia/web/wiki/Libisoburn
+
+
+[000] Index
+________________________________________________________________________________
+
+* Installation ........................................................... [001]
+* Usage .................................................................. [002]
+* References ............................................................. [003]
+
+
+[001] Installation
+________________________________________________________________________________
+
++------------------------------------------------------------------------------+
+|                                                                              |
+|  $ kiss b libisoburn                                                         |
+|                                                                              |
++------------------------------------------------------------------------------+
+
+
+[002] Usage
+________________________________________________________________________________
+
+Refer to the manual pages and command help output.
+
+
+[003] References
+________________________________________________________________________________
+
+[0] https://dev.lovelyhq.com/libburnia/web/wiki/Libisoburn

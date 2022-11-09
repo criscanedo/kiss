@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+export LDFLAGS="$LDFAGS -static"
+
+./configure \
+    --prefix=/usr \
+    --disable-libacl \
+    --disable-xattr \
+    --disable-libjte
+
+make
+make install
