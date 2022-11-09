@@ -1,77 +1,212 @@
-|/
-|\ISS LINUX                                                https://kisslinux.org
-________________________________________________________________________________
+Partition and Mount Disk
+------------------------
 
+    fdisk /dev/sdb # Your unmounted disk
 
-Official Repositories
-________________________________________________________________________________
+o for new empty DOS partition table.
+n for new partition.
+t for changing partition type to 83.
+b to set bootable flag.
+p to print partition table and confirm changes.
+w to write table to disk and exit.
 
-The official repositories for KISS Linux maintained by Dylan Araps.
+    mkfs.ext4 /dev/sdb1
+    mkdir -p /mnt/kiss
+    mount /dev/sdb1 /mnt/kiss
 
-More information:
+UEFI users will need to use a GPT partition table.
 
-    - https://kisslinux.org
-    - https://kisslinux.org/package-system
+Download and Verify Tarball
+---------------------------
 
+    ver=2021.7-9
+    url=https://github.com/kisslinux/repo/releases/download/$ver
+    file=kiss-chroot-$ver.tar.xz
+    curl -fLO "$url/$file"
+    curl -fLO "$url/$file.sha256"
+    curl -fLO "$url/$file.asc"
+    sha256sum -c < "$file.sha256"
+    gpg --keyserver keyserver.ubuntu.com --recv-key 13295DAC2F13B5C
+    gpg --verify "$file.asc"
 
-Signature Verification
-________________________________________________________________________________
+Unpack Tarball
+--------------
 
-Enabling signature verification: https://kisslinux.org/install#3.0
+    mkdir -p /mnt/kiss
+    cd /mnt/kiss
+    tar -xvf "$OLDPWD/$file"
 
+Enter chroot
+------------
 
-Dylan Araps' public key:
-________________________________________________________________________________
+    /mnt/kiss/bin/kiss-chroot /mnt/kiss
 
+Clone Repositories
+------------------
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+    mkdir -p /usr/local/repo
+    cd /usr/local/repo
+    git clone git://xhax0r.com/kiss .
 
-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
-T2E=
-=bCjZ
------END PGP PUBLIC KEY BLOCK-----
+Set KISS_PATH
+-------------
+
+Write to ~/.profile:
+
+    export KISS_PATH=''
+    KISS_PATH=/usr/local/repo
+    KISS_PATH=$KISS_PATH:/usr/local/repo/core
+    KISS_PATH=$KISS_PATH:/usr/local/repo/extra
+
+Source ~/.profile in your shell:
+
+    . ~/.profile
+
+Enable Signature Verification
+-----------------------------
+
+    kiss build gnupg1
+    gpg --keyserver keyserver.ubuntu.com --recv-key 13295DAC2CF13B5C
+    gpg --keyserver hkps://keys.openpgp.org --recv-key A17A121ED99DAFCB
+    echo trusted-key 0x13295DAC2CF13B5C >> /root/.gnupg/gpg.conf
+    echo trusted-key 0xA17A121ED99DAFCB >> /root/.gnupg/gpg.conf
+    cd /usr/local/repo
+    git config merge.verifySignatures true
+
+Rebuild the System
+------------------
+
+    export CFLAGS="-O2 -pipe -march=native"
+    export CXXFLAGS="$CFLAGS"
+    export MAKEFLAGS="-j$(nproc)"
+    kiss update
+    cd /var/db/kiss/installed && kiss build *
+
+Download and Unpack Kernel
+--------------------------
+
+    mkdir -p /usr/local/src
+    cd /usr/local/src
+    curl -fLO https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.12.10.tar.xz
+    tar xvf linux-5.12.10.tar.xz
+    cd linux-*
+
+Download and Unpack Firmware
+----------------------------
+
+    curl -fLO https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-20221012.tar.gz
+    tar xvf linux-firmware-20221012.tar.gz
+    mkdir -p /lib/firmware
+
+Copy firmware you need to /lib/firmware if needed. Or copy all of it to play it safe (890M):
+
+    cp -R linux-firmware-20221012/* /lib/firmware
+
+Configure Kernel
+----------------
+
+    make mrproper
+    make defconfig
+    kiss b ncurses
+    make menuconfig
+    cp .config /boot/config
+
+Ensure:
+
+    CONFIG_IKHEADERS=n
+    CONFIG_IKCONFIG=y
+    CONFIG_IKCONFIG_PROC=y
+
+AMD GPU users will want https://wiki.gentoo.org/wiki/AMDGPU.
+
+Ensure everything is built in, not a module:
+
+    sed -i 's/=m/=y/' .config
+
+Installed Required Packages
+---------------------------
+
+    kiss b libelf
+    sed '/<stdlib.h>/a #include <linux/stddef.h>' tools/objtool/arch/x86/decode.c > _
+    mv -f _ tools/objtool/arch/x86/decode.c
+    patch -p1 < /usr/share/doc/kiss/wiki/kernel/no-perl.patch
+
+Build and Install Kernel
+------------------------
+
+    make
+    make install
+
+Install Required Packages
+-------------------------
+
+    kiss b baseinit e2fsprogs dosfstools dhcpcd
+    unset CFLAGS
+    unset CXXFLAGS
+    export CFLAGS="-O2 -pipe"
+    export CXXFLAGS="$CFLAGS"
+    kiss b grub
+    grub-install /dev/sdb # Your entire disk, not a partition
+    grub-mkconfig -o /boot/grub/grub.cfg
+
+Wifi users will need https://kisslinux.org/wiki/pkg/wpa_supplicant.
+UEFI users will need https://kisslinux.org/wiki/pkg/efibootmgr.
+
+Post Installation
+-----------------
+
+    passwd root
+    adduser USER
+    printf '%s\n' HOSTNAME > /etc/hostname
+
+Write to /etc/hosts:
+
+    127.0.0.1  HOSTNAME  HOSTNAME
+    ::1        HOSTNAME  HOSTNAME  ip6-localhost
+
+Write to /etc/fstab:
+
+   /dev/sdb1    /           ext4     defaults            1  1
+   /dev/cdrom   /mnt/cdrom  auto     noauto,owner,ro     0  0
+   proc         /proc       proc     nosuid,noexec,nodev 0  0
+   sysfs        /sys        sysfs    nosuid,noexec,nodev 0  0
+   devtmpfs     /dev        devtmpfs mode=0755,nosuid    0  0
+   devpts       /dev/pts    devpts   gid=5,mode=620      0  0
+   tmpfs        /run        tmpfs    defaults            0  0
+
+Write to /etc/profile:
+
+    export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin
+    export LC_ALL="en_US.UTF-8"
+    export LANG="$LC_ALL"
+    export VISUAL="vi"
+    export EDITOR="$VISUAL"
+    export CFLAGS="-O2"
+    export CXXFLAGS="$CFLAGS"
+    export MAKEFLAGS="-j$(nproc)"
+
+    # Set default umask.
+    umask 022
+
+    # Define foreground color variables
+    P_BLACK="\[$(tput setaf 0)\]"
+    P_RED="\[$(tput setaf 1)\]"
+    P_GREEN="\[$(tput setaf 2)\]"
+    P_YELLOW="\[$(tput setaf 3)\]"
+    P_BLUE="\[$(tput setaf 4)\]"
+    P_MAGNETA="\[$(tput setaf 5)\]"
+    P_CYAN="\[$(tput setaf 6)\]"
+    P_WHITE="\[$(tput setaf 7)\]"
+    P_RESET="\[$(tput sgr0)\]"
+
+    # Configure prompt
+    export PS1="$P_GREEN\u$P_RED@$P_GREEN\h:$P_CYAN\w$P_WHITE\\$ $P_RESET"
+
+    # Load profiles from /etc/profile.d
+    for file in /etc/profile.d/*.sh; do
+        [ -r "$file" ] && . "$file"
+    done
+
+    unset file
+
+Boot into disk containing new system. Enjoy
