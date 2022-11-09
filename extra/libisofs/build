@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --disable-xattr \
+    --disable-libacl \
+    --disable-libjte
+
+make
+make install
