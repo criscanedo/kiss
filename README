@@ -26,7 +26,7 @@ Download and Verify Tarball
     curl -fLO "$url/$file.sha256"
     curl -fLO "$url/$file.asc"
     sha256sum -c < "$file.sha256"
-    gpg --keyserver keyserver.ubuntu.com --recv-key 13295DAC2F13B5C
+    gpg --keyserver keyserver.ubuntu.com --recv-key 13295DAC2CF13B5C
     gpg --verify "$file.asc"
 
 Unpack Tarball
