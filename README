@@ -161,7 +161,7 @@ Wifi users will need https://kisslinux.org/wiki/pkg/wpa_supplicant.
 UEFI users will need https://kisslinux.org/wiki/pkg/efibootmgr.
 
 Post Installation, Before Booting
------------------
+---------------------------------
 
     passwd root
     adduser -h /home/USER -s /bin/sh USER
