@@ -82,18 +82,14 @@ Rebuild the System
     kiss update
     cd /var/db/kiss/installed && kiss build *
 
-Download and Unpack Kernel
+Download and Unpack Kernel and Firmware
 --------------------------
 
-    mkdir -p /usr/local/src
-    cd /usr/local/src
+    mkdir -p /usr/src
+    cd /usr/src
     curl -fLO https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.12.10.tar.xz
     tar xvf linux-5.12.10.tar.xz
     cd linux-*
-
-Download and Unpack Firmware
-----------------------------
-
     curl -fLO https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-20221012.tar.gz
     tar xvf linux-firmware-20221012.tar.gz
     mkdir -p /lib/firmware
@@ -101,6 +97,12 @@ Download and Unpack Firmware
 Copy firmware you need to /lib/firmware if needed. Or copy all of it to play it safe (890M):
 
     cp -R linux-firmware-20221012/* /lib/firmware
+
+AMD CPU/GPU users:
+
+    cp -R linux-firmware-20221012/amd /lib/firmware
+    cp -R linux-firmware-20221012/amd-ucode /lib/firmware
+    cp -R linux-firmware-20221012/amdgpu /lib/firmware
 
 Configure Kernel
 ----------------
@@ -142,6 +144,8 @@ Build and Install Kernel
 
     make
     make install
+    mv /boot/vmlinuz /boot/vmlinuz-5.12.10
+    mv /boot/System.map /boot/System.map-5.12.10
 
 Install Required Packages
 -------------------------
@@ -149,8 +153,6 @@ Install Required Packages
     kiss b baseinit e2fsprogs dosfstools dhcpcd
     unset CFLAGS
     unset CXXFLAGS
-    export CFLAGS="-O2 -pipe"
-    export CXXFLAGS="$CFLAGS"
     kiss b grub
     grub-install /dev/sdb # Your entire disk, not a partition
     grub-mkconfig -o /boot/grub/grub.cfg
@@ -158,11 +160,11 @@ Install Required Packages
 Wifi users will need https://kisslinux.org/wiki/pkg/wpa_supplicant.
 UEFI users will need https://kisslinux.org/wiki/pkg/efibootmgr.
 
-Post Installation
+Post Installation, Before Booting
 -----------------
 
     passwd root
-    adduser USER
+    adduser -h /home/USER -s /bin/sh USER
     printf '%s\n' HOSTNAME > /etc/hostname
 
 Write to /etc/hosts:
@@ -172,13 +174,13 @@ Write to /etc/hosts:
 
 Write to /etc/fstab:
 
-   /dev/sdb1    /           ext4     defaults            1  1
-   /dev/cdrom   /mnt/cdrom  auto     noauto,owner,ro     0  0
-   proc         /proc       proc     nosuid,noexec,nodev 0  0
-   sysfs        /sys        sysfs    nosuid,noexec,nodev 0  0
-   devtmpfs     /dev        devtmpfs mode=0755,nosuid    0  0
-   devpts       /dev/pts    devpts   gid=5,mode=620      0  0
-   tmpfs        /run        tmpfs    defaults            0  0
+   /dev/sdb1    /           ext4     defaults             1  1
+   /dev/cdrom   /mnt/cdrom  auto     noauto,owner,ro      0  0
+   proc         /proc       proc     nosuid,noexec,nodev  0  0
+   sysfs        /sys        sysfs    nosuid,noexec,nodev  0  0
+   devtmpfs     /dev        devtmpfs mode=0755,nosuid     0  0
+   devpts       /dev/pts    devpts   gid=5,mode=620       0  0
+   tmpfs        /tmp        tmpfs    nosuid,nodev,noatime 0  0
 
 Write to /etc/profile:
 
