@@ -1,0 +1,4 @@
+gcc  make
+make make
+nasm make
+xxd  make
