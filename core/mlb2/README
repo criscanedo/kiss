@@ -46,7 +46,7 @@ Note the LBA (in 512-byte sectors) of the kernel within the target device:
 
 +------------------------------------------------------------------------------+
 |                                                                              |
-|  $ hdparm --fibtmap /boot/vmlinuz                                            |
+|  $ hdparm --fibmap /boot/vmlinuz                                             |
 |                                                                              |
 +------------------------------------------------------------------------------+
 
